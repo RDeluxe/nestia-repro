@@ -1,0 +1,27 @@
+version: "3"
+
+services:
+  postgres:
+    image: postgis/postgis:13-3.1-alpine
+    container_name: sunagenda-postgres
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_DB: ${DB_NAME}
+    volumes:
+      - ./docker/postgres/docker-entrypoint-initdb:/docker-entrypoint-initdb.d/
+  minio:
+    image: minio/minio
+    container_name: sunagenda-minio
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      MINIO_ROOT_USER: ${MINIO_USER}
+      MINIO_ROOT_PASSWORD: ${MINIO_PASSWORD}
+      MINIO_REGION_NAME: fr-par
+    command: server /data --console-address ":9001"
+    volumes:
+      - ./minio/data:/data
