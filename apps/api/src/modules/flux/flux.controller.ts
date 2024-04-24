@@ -1,9 +1,7 @@
 import { TypedRoute } from '@nestia/core'
 import { Body, Controller, Post } from '@nestjs/common'
-import { Source } from '@prisma/client'
 
 export interface LaunchParsingDTO {
-  source: Source
   dryRun?: boolean
 }
 
